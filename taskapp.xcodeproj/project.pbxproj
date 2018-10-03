@@ -16,6 +16,8 @@
 		D6149DBE2152867200382FB8 /* taskappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6149DBD2152867200382FB8 /* taskappTests.swift */; };
 		D6149DC92152867200382FB8 /* taskappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6149DC82152867200382FB8 /* taskappUITests.swift */; };
 		D6149DD72152921300382FB8 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6149DD62152921300382FB8 /* InputViewController.swift */; };
+		D6379EA4215A765200B1D7E7 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6379EA3215A765200B1D7E7 /* CategoryViewController.swift */; };
+		D6379EA6215A7A0F00B1D7E7 /* category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6379EA5215A7A0F00B1D7E7 /* category.swift */; };
 		D6C3453E2153E6F600D0158E /* task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3453D2153E6F600D0158E /* task.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +56,8 @@
 		D6149DC82152867200382FB8 /* taskappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taskappUITests.swift; sourceTree = "<group>"; };
 		D6149DCA2152867200382FB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D6149DD62152921300382FB8 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
+		D6379EA3215A765200B1D7E7 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		D6379EA5215A7A0F00B1D7E7 /* category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = category.swift; sourceTree = "<group>"; };
 		D6C3453D2153E6F600D0158E /* task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,7 +136,9 @@
 				D6149DB12152867100382FB8 /* LaunchScreen.storyboard */,
 				D6149DB42152867100382FB8 /* Info.plist */,
 				D6149DD62152921300382FB8 /* InputViewController.swift */,
+				D6379EA3215A765200B1D7E7 /* CategoryViewController.swift */,
 				D6C3453D2153E6F600D0158E /* task.swift */,
+				D6379EA5215A7A0F00B1D7E7 /* category.swift */,
 			);
 			path = taskapp;
 			sourceTree = "<group>";
@@ -332,6 +338,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6379EA4215A765200B1D7E7 /* CategoryViewController.swift in Sources */,
+				D6379EA6215A7A0F00B1D7E7 /* category.swift in Sources */,
 				D6C3453E2153E6F600D0158E /* task.swift in Sources */,
 				D6149DD72152921300382FB8 /* InputViewController.swift in Sources */,
 				D6149DAB2152867100382FB8 /* ViewController.swift in Sources */,
@@ -503,6 +511,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6FDLSN72QJ;
 				INFOPLIST_FILE = taskapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.shota.kohsaka.taskapp;
@@ -518,6 +527,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6FDLSN72QJ;
 				INFOPLIST_FILE = taskapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.shota.kohsaka.taskapp;

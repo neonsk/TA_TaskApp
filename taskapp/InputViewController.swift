@@ -10,11 +10,14 @@ import UIKit
 import RealmSwift
 import UserNotifications
 
-class InputViewController: UIViewController {
+class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var categoryTextField: UITextField!
+    var pickerView: UIPickerView = UIPickerView()
     
+    var categoryArray = try! Realm().objects(Category.self)
     var task : Task!
     let realm = try! Realm()
     
@@ -27,6 +30,20 @@ class InputViewController: UIViewController {
         titleTextField.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
+        categoryTextField.text = task.category
+        
+        //Picker設定
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.showsSelectionIndicator = true
+        
+        let toolbar = UIToolbar(frame: CGRectMake(0, 0, 0, 35))
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action:#selector(InputViewController.done))
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action:#selector(InputViewController.cancel))
+        toolbar.setItems([cancelItem, doneItem], animated: true)
+        
+        self.categoryTextField.inputView = pickerView
+        self.categoryTextField.inputAccessoryView = toolbar
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +60,7 @@ class InputViewController: UIViewController {
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
             self.task.date = self.datePicker.date
+            self.task.category = self.categoryTextField.text!
             self.realm.add(self.task, update: true)
         }
         setNotification(task : task)
@@ -87,4 +105,41 @@ class InputViewController: UIViewController {
             }
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if segue.identifier == "CategorySegue"{
+            let categoryViewController:CategoryViewController = segue.destination as! CategoryViewController
+            categoryViewController.task = self.task
+        }
+    }
+    
+    //PickerView生成
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categoryArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return categoryArray[row].categoryName
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.categoryTextField.text = categoryArray[row].categoryName
+    }
+    
+    @objc func cancel() {
+        self.categoryTextField.text = ""
+        self.categoryTextField.endEditing(true)
+    }
+    
+    @objc func done() {
+        self.categoryTextField.endEditing(true)
+    }
+    
+    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
 }
