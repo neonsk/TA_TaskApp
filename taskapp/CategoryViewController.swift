@@ -57,10 +57,13 @@ class CategoryViewController: UIViewController,UIPickerViewDelegate,UIPickerView
     }
     //カテゴリー削除のアクション
     @IBAction func DeleteCategory(_ sender: Any) {
-        // データベースから削除する
-        try! realm.write {
-        self.realm.delete(self.categoryArray[pickerView.selectedRow(inComponent: 0)])
-        pickerView.reloadAllComponents()
+        let allCategorys = realm.objects(Category.self)
+        if allCategorys.count >= 2 {
+            // データベースから削除する
+            try! realm.write {
+            self.realm.delete(self.categoryArray[pickerView.selectedRow(inComponent: 0)])
+            pickerView.reloadAllComponents()
+            }
         }
     }
     

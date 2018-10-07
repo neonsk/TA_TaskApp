@@ -25,6 +25,17 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         
+        try! realm.write {
+            let category = Category()
+            let allCategorys = realm.objects(Category.self)
+            if allCategorys.count == 0 {
+                category.id = 0
+            }
+            category.categoryName = ""
+            self.realm.add(category, update: true)
+            print("categoryに初期値が追加されました")
+        }
+        
         //検索バーの設定
         searchBar.delegate = self
         searchBar.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:60)
@@ -59,7 +70,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // データの数（＝セルの数）を返すメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if categoryName != ""{
-            taskArray = try! Realm().objects(Task.self).filter("category == %@",categoryName).sorted(byKeyPath: "date", ascending: false)
+            taskArray = try! Realm().objects(Task.self).filter("category.categoryName == %@",categoryArray[pickerView.selectedRow(inComponent: 0)].categoryName).sorted(byKeyPath: "date", ascending: false)
         }
         print("numberOfRowsInSection実行")
         return taskArray.count
@@ -143,6 +154,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
         searchBar.showsCancelButton = true
+        print("searchBar.text = \(searchBar.text!)")
         categoryName = searchBar.text!
         tableView.reloadData()
     }

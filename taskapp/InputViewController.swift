@@ -30,7 +30,7 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         titleTextField.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
-        categoryTextField.text = task.category
+        categoryTextField.text = task.category?.categoryName
         
         //Picker設定
         pickerView.delegate = self
@@ -56,14 +56,22 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        let selectCategory = try! Realm().objects(Category.self).filter("categoryName == %@",categoryTextField.text!)
+        print(task)
         try! realm.write {
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
             self.task.date = self.datePicker.date
-            self.task.category = self.categoryTextField.text!
+            self.task.category = categoryArray[pickerView.selectedRow(inComponent: 0)]
+            print("categoryArray[pickerView.selectedRow(inComponent: 0)] = \(categoryArray[pickerView.selectedRow(inComponent: 0)])")
+            //self.task.category?.id  = selectCategory[0].id
+            //self.task.category?.categoryName  = selectCategory[0].categoryName
             self.realm.add(self.task, update: true)
         }
+        print(task)
+        print(categoryArray[pickerView.selectedRow(inComponent: 0)].categoryName)
         setNotification(task : task)
+        
         super.viewWillDisappear(animated)
     }
     // タスクのローカル通知を登録する
