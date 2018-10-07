@@ -31,7 +31,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             if allCategorys.count == 0 {
                 category.id = 0
             }
-            category.categoryName = ""
+            category.categoryName = "全てのカテゴリー"
             self.realm.add(category, update: true)
             print("categoryに初期値が追加されました")
         }
@@ -69,7 +69,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // MARK: UITableViewDataSourceプロトコルのメソッド
     // データの数（＝セルの数）を返すメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if categoryName != ""{
+        if categoryName == "全てのカテゴリー" {
+            return taskArray.count
+        }else if categoryName != ""{
             taskArray = try! Realm().objects(Task.self).filter("category.categoryName == %@",categoryArray[pickerView.selectedRow(inComponent: 0)].categoryName).sorted(byKeyPath: "date", ascending: false)
         }
         print("numberOfRowsInSection実行")
