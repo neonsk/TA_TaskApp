@@ -70,7 +70,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // データの数（＝セルの数）を返すメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if categoryName == "全てのカテゴリー" {
-            return taskArray.count
+            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
         }else if categoryName != ""{
             taskArray = try! Realm().objects(Task.self).filter("category.categoryName == %@",categoryArray[pickerView.selectedRow(inComponent: 0)].categoryName).sorted(byKeyPath: "date", ascending: false)
         }

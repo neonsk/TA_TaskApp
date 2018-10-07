@@ -26,7 +26,6 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         // Do any additional setup after loading the view.
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
-        
         titleTextField.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
@@ -44,6 +43,9 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         self.categoryTextField.inputView = pickerView
         self.categoryTextField.inputAccessoryView = toolbar
+        if let category = task.category, let index = categoryArray.index(of: category) {
+            pickerView.selectRow(index, inComponent: 0, animated: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,7 +58,6 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        let selectCategory = try! Realm().objects(Category.self).filter("categoryName == %@",categoryTextField.text!)
         print(task)
         try! realm.write {
             self.task.title = self.titleTextField.text!
@@ -64,8 +65,6 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             self.task.date = self.datePicker.date
             self.task.category = categoryArray[pickerView.selectedRow(inComponent: 0)]
             print("categoryArray[pickerView.selectedRow(inComponent: 0)] = \(categoryArray[pickerView.selectedRow(inComponent: 0)])")
-            //self.task.category?.id  = selectCategory[0].id
-            //self.task.category?.categoryName  = selectCategory[0].categoryName
             self.realm.add(self.task, update: true)
         }
         print(task)
